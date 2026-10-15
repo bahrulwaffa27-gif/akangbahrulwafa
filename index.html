@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelajah Cita Rasa Nusantara - Kuliner Khas Daerah Indonesia</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        terracotta: {
+                            50: '#fdf8f6',
+                            100: '#f2e8e5',
+                            500: '#C85A32',
+                            600: '#a84320',
+                            700: '#883316',
+                            800: '#6f2913',
+                        },
+                        amberGold: {
+                            400: '#f59e0b',
+                            500: '#d97706',
+                            600: '#b45309',
+                        },
+                        creamBg: '#FAF7F2',
+                        darkRich: '#1A1412',
+                        cardDark: '#241C18'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FAF7F2;
+            color: #1A1412;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(200, 90, 50, 0.12);
+        }
+
+        /* Smooth Hover Effect */
+        .hover-lift {
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -10px rgba(200, 90, 50, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF7F2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C85A32;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #883316;
+        }
+
+        /* Hero Overlay Gradient */
+        .hero-gradient {
+            background: linear-gradient(180deg, rgba(26,20,18,0.55) 0%, rgba(26,20,18,0.92) 100%);
+        }
+
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-none {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-terracotta-500 selection:text-white">
+
+    <!-- NAVBAR HEADER -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full bg-terracotta-500 flex items-center justify-center text-amber-300 shadow-lg group-hover:rotate-12 transition-transform">
+                    <i class="fa-solid font-bold fa-utensils text-lg"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-xl md:text-2xl font-bold tracking-wide text-white drop-shadow-md">RasaNusantara</span>
+                    <span class="text-[10px] tracking-widest uppercase text-amber-200/80 -mt-1 font-sans">Cita Rasa Warisan Daerah</span>
+                </div>
+            </a>
+
+            <!-- Navigation Menu (Desktop) -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-white/90">
+                <a href="#beranda" class="hover:text-amber-300 transition-colors">Beranda</a>
+                <a href="#katalog-makanan" class="hover:text-amber-300 transition-colors">Makanan Khas</a>
+                <a href="#galeri" class="hover:text-amber-300 transition-colors">Galeri</a>
+                <a href="#tentang" class="hover:text-amber-300 transition-colors">Tentang</a>
+            </nav>
+
+            <!-- Quick Action & Mobile Menu Button -->
+            <div class="flex items-center gap-3">
+                <a href="#katalog-makanan" class="hidden sm:inline-flex items-center gap-2 bg-terracotta-500 hover:bg-terracotta-600 text-white px-5 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all shadow-md hover:shadow-lg">
+                    <i class="fa-solid fa-utensils"></i> Eksplor Kuliner
+                </a>
+                <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none p-1" aria-label="Buka Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-darkRich/95 backdrop-blur-md mt-4 rounded-2xl p-6 border border-white/10 text-white flex flex-col gap-4 text-center">
+            <a href="#beranda" class="mobile-link py-2 border-b border-white/10 hover:text-amber-300">Beranda</a>
+            <a href="#katalog-makanan" class="mobile-link py-2 border-b border-white/10 hover:text-amber-300">Makanan Khas Daerah</a>
+            <a href="#galeri" class="mobile-link py-2 border-b border-white/10 hover:text-amber-300">Galeri</a>
+            <a href="#tentang" class="mobile-link py-2 hover:text-amber-300">Tentang</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="beranda" class="relative min-h-screen flex items-center justify-center text-white overflow-hidden pt-20">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1920&auto=format&fit=crop" 
+                 alt="Kuliner Nusantara Indonesia" 
+                 class="w-full h-full object-cover scale-105 filter brightness-90">
+            <div class="absolute inset-0 hero-gradient"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center px-6 py-20 flex flex-col items-center">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-terracotta-500/40 border border-amber-400/40 backdrop-blur-md mb-6">
+                <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                <span class="text-xs font-semibold tracking-widest uppercase text-amber-200">Kekayaan Kuliner Khas Daerah</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
+                Jelajah Cita Rasa <br>
+                <span class="italic font-normal text-amber-300">Makanan Khas Nusantara</span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="max-w-2xl text-base sm:text-lg md:text-xl text-stone-200 font-light mb-10 leading-relaxed">
+                Temukan kelezatan resep otentik dari Sabang sampai Merauke. Langsung jelajahi makanan favorit daerahmu serta akses akun koki & kreator kuliner Nusantara secara mudah.
+            </p>
+
+            <!-- Direct Action CTA Buttons -->
+            <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                <a href="#katalog-makanan" class="w-full sm:w-auto px-8 py-4 bg-terracotta-500 hover:bg-terracotta-600 text-white rounded-full font-semibold shadow-xl hover:shadow-terracotta-500/40 transition-all flex items-center justify-center gap-3 group text-sm sm:text-base">
+                    <span>Eksplor Makanan Khas</span>
+                    <i class="fa-solid fa-arrow-down group-hover:translate-y-1 transition-transform"></i>
+                </a>
+                <a href="https://www.youtube.com/results?search_query=kuliner+makanan+khas+daerah+indonesia" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-full font-semibold backdrop-blur-md transition-all text-center flex items-center justify-center gap-2 text-sm sm:text-base">
+                    <i class="fa-brands fa-youtube text-red-500 text-lg"></i>
+                    <span>Akun YouTube Kuliner</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 animate-bounce text-stone-300">
+            <a href="#katalog-makanan" aria-label="Scroll ke Katalog Makanan"><i class="fa-solid fa-chevron-down text-xl"></i></a>
+        </div>
+    </section>
+
+    <!-- SECTION KATALOG MAKANAN KHAS DAERAH -->
+    <section id="katalog-makanan" class="py-24 px-6 md:px-12 max-w-7xl mx-auto scroll-mt-12">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-terracotta-500 font-semibold tracking-widest text-xs uppercase mb-2 block">Katalog Warisan Nusantara</span>
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold text-darkRich mb-4">Makanan Khas Daerah</h2>
+            <div class="w-20 h-1 bg-terracotta-500 mx-auto rounded-full mb-6"></div>
+            <p class="text-stone-600 text-sm sm:text-base">Pilih berdasarkan daerah favoritmu atau temukan hidangan legendaris lengkap dengan tautan langsung ke akun kreasi kuliner.</p>
+        </div>
+
+        <!-- QUICK CATEGORIES CARDS (AKSES CEPAT KE PER WILAYAH) -->
+        <div class="mb-12">
+            <h3 class="text-xs font-bold text-stone-500 uppercase tracking-widest mb-4 text-center">Pilih Wilayah Cepat:</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                <button onclick="quickFilter('semua')" class="quick-region-btn active group p-4 rounded-2xl bg-white border border-stone-200 hover:border-terracotta-500 shadow-sm transition-all text-center flex flex-col items-center justify-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-terracotta-50 text-terracotta-500 flex items-center justify-center group-hover:bg-terracotta-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-map"></i>
+                    </div>
+                    <span class="text-xs font-bold text-darkRich">Semua Daerah</span>
+                </button>
+
+                <button onclick="quickFilter('sumatera')" class="quick-region-btn group p-4 rounded-2xl bg-white border border-stone-200 hover:border-terracotta-500 shadow-sm transition-all text-center flex flex-col items-center justify-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-mountain font-bold"></i>
+                    </div>
+                    <span class="text-xs font-bold text-darkRich">Sumatra</span>
+                </button>
+
+                <button onclick="quickFilter('jawa')" class="quick-region-btn group p-4 rounded-2xl bg-white border border-stone-200 hover:border-terracotta-500 shadow-sm transition-all text-center flex flex-col items-center justify-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-city"></i>
+                    </div>
+                    <span class="text-xs font-bold text-darkRich">Jawa</span>
+                </button>
+
+                <button onclick="quickFilter('bali-nusa')" class="quick-region-btn group p-4 rounded-2xl bg-white border border-stone-200 hover:border-terracotta-500 shadow-sm transition-all text-center flex flex-col items-center justify-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-umbrella-beach"></i>
+                    </div>
+                    <span class="text-xs font-bold text-darkRich">Bali & NT</span>
+                </button>
+
+                <button onclick="quickFilter('sulawesi')" class="quick-region-btn group p-4 rounded-2xl bg-white border border-stone-200 hover:border-terracotta-500 shadow-sm transition-all text-center flex flex-col items-center justify-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-cyan-50 text-cyan-600 flex items-center justify-center group-hover:bg-cyan-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-water"></i>
+                    </div>
+                    <span class="text-xs font-bold text-darkRich">Sulawesi</span>
+                </button>
+
+                <button onclick="quickFilter('papua-maluku')" class="quick-region-btn group p-4 rounded-2xl bg-white border border-stone-200 hover:border-terracotta-500 shadow-sm transition-all text-center flex flex-col items-center justify-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-tree"></i>
+                    </div>
+                    <span class="text-xs font-bold text-darkRich">Papua & Maluku</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Live Search Input -->
+        <div class="mb-10 max-w-md mx-auto relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-stone-400"></i>
+            <input type="text" id="searchInput" placeholder="Cari kuliner khas (contoh: Rendang, Papua, Gudeg)..." 
+                   class="w-full pl-11 pr-4 py-3 bg-white border border-stone-200 rounded-full focus:outline-none focus:ring-2 focus:ring-terracotta-500/50 focus:border-terracotta-500 shadow-sm text-sm transition-all">
+        </div>
+
+        <!-- Food Cards Grid -->
+        <div id="foodGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Dynamic Content loaded via JS -->
+        </div>
+
+        <!-- No Results Message -->
+        <div id="noResults" class="hidden text-center py-16">
+            <div class="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4 text-stone-400 text-2xl">
+                <i class="fa-solid fa-utensils"></i>
+            </div>
+            <h3 class="font-serif text-xl font-semibold text-darkRich mb-2">Kuliner Tidak Ditemukan</h3>
+            <p class="text-stone-500 text-sm">Coba kata kunci pencarian lain atau pilih kategori wilayah yang tersedia.</p>
+        </div>
+    </section>
+
+    <!-- GALERI FOTO UNIK -->
+    <section id="galeri" class="py-20 bg-darkRich text-white relative">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-amber-400 font-semibold tracking-widest text-xs uppercase mb-2 block">Potret Cita Rasa</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold">Galeri Kuliner Daerah</h2>
+                </div>
+                <p class="text-stone-400 text-sm max-w-md mt-4 md:mt-0">Visualisasi estetik keindahan sajian khas dan kekayaan rempah khas bumi Indonesia.</p>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="relative group overflow-hidden rounded-2xl h-64 md:h-80 shadow-md">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop" alt="Bumbu Rempah Segar" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                        <span class="text-xs font-semibold text-amber-300">Rempah Bumbu Tradisional</span>
+                    </div>
+                </div>
+
+                <div class="relative group overflow-hidden rounded-2xl h-64 md:h-80 shadow-md md:col-span-2">
+                    <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=1200&auto=format&fit=crop" alt="Proses Pembuatan Sate" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                        <span class="text-xs font-semibold text-amber-300">Pembakaran Sate dengan Arang Tradisional</span>
+                    </div>
+                </div>
+
+                <div class="relative group overflow-hidden rounded-2xl h-64 md:h-80 shadow-md">
+                    <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?q=80&w=800&auto=format&fit=crop" alt="Sajikan Rendang Daging" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                        <span class="text-xs font-semibold text-amber-300">Hidangan Rendang Daging Padang</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION TENTANG -->
+    <section id="tentang" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="relative">
+                <div class="relative z-10 rounded-3xl overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=1000&auto=format&fit=crop" alt="Rempah Indonesia" class="w-full h-full object-cover">
+                </div>
+                <div class="absolute -bottom-6 -right-6 w-full h-full border-2 border-terracotta-500/30 rounded-3xl z-0 hidden sm:block"></div>
+            </div>
+
+            <div class="space-y-6">
+                <span class="text-terracotta-500 font-semibold tracking-widest text-xs uppercase block">Misi Melestarikan Cita Rasa</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-darkRich leading-tight">Melindungi Kekayaan Kuliner Indonesia</h2>
+                <p class="text-stone-600 leading-relaxed">
+                    Setiap piring makanan khas daerah mengandung kisah sejarah, filosofi, dan perpaduan rempah murni hasil kearifan lokal leluhur. RasaNusantara hadir sebagai wadah interaktif untuk mempermudah generasi muda mengenal serta menjelajahi kreasi para koki kuliner khas daerah.
+                </p>
+
+                <div class="grid grid-cols-2 gap-6 pt-4">
+                    <div class="border-l-2 border-terracotta-500 pl-4">
+                        <h4 class="font-serif text-2xl font-bold text-terracotta-500">34+</h4>
+                        <p class="text-xs text-stone-500 uppercase tracking-wider font-semibold mt-1">Provinsi Terwakili</p>
+                    </div>
+                    <div class="border-l-2 border-terracotta-500 pl-4">
+                        <h4 class="font-serif text-2xl font-bold text-terracotta-500">100%</h4>
+                        <p class="text-xs text-stone-500 uppercase tracking-wider font-semibold mt-1">Resep Otentik</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-darkRich text-white border-t border-white/10 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div class="space-y-4 md:col-span-2">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-terracotta-500 flex items-center justify-center text-amber-300">
+                        <i class="fa-solid fa-utensils text-sm"></i>
+                    </div>
+                    <span class="font-serif text-2xl font-bold tracking-wide">RasaNusantara</span>
+                </div>
+                <p class="text-stone-400 text-sm max-w-sm leading-relaxed">
+                    Platform apresiasi ragam kuliner khas daerah di Indonesia. Melestarikan resep dan nilai budaya melalui akses cepat dan interaktif.
+                </p>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-lg font-semibold text-amber-300 mb-4">Navigasi Cepat</h4>
+                <ul class="space-y-2 text-sm text-stone-400">
+                    <li><a href="#beranda" class="hover:text-white transition-colors">Beranda</a></li>
+                    <li><a href="#katalog-makanan" class="hover:text-white transition-colors">Katalog Makanan Khas</a></li>
+                    <li><a href="#galeri" class="hover:text-white transition-colors">Galeri Foto</a></li>
+                    <li><a href="#tentang" class="hover:text-white transition-colors">Tentang Kami</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-serif text-lg font-semibold text-amber-300 mb-4">Akun Kuliner Daerah</h4>
+                <p class="text-xs text-stone-400 mb-3">Langsung tuju ke akun resmi & komunitas kuliner khas daerah:</p>
+                <div class="flex gap-3 text-stone-300">
+                    <!-- Direct Social Media Links to Active Culinary Profiles & Search Pages -->
+                    <a href="https://www.instagram.com/kulinerindonesiaku/" target="_blank" rel="noopener noreferrer" title="Akun Instagram Kuliner Indonesia" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-terracotta-500 hover:text-white transition-all">
+                        <i class="fa-brands fa-instagram text-lg"></i>
+                    </a>
+                    <a href="https://www.youtube.com/@KulinerNusantara" target="_blank" rel="noopener noreferrer" title="Channel YouTube Kuliner Nusantara" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all">
+                        <i class="fa-brands fa-youtube text-lg"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@kulinerindonesia" target="_blank" rel="noopener noreferrer" title="Akun TikTok Kuliner Indonesia" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-stone-700 hover:text-white transition-all">
+                        <i class="fa-brands fa-tiktok text-lg"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 md:px-12 border-t border-white/5 pt-8 text-center text-xs text-stone-500">
+            <p>&copy; 2026 @bahrulsukarasanusantara. Dibuat dengan <i class="fa-solid fa-heart text-terracotta-500"></i> untuk Kekayaan Cita Rasa Indonesia.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL DETAIL MAKANAN -->
+    <div id="foodModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl transform transition-transform duration-300 scale-95 opacity-0 max-h-[90vh] flex flex-col" id="modalContainer">
+            
+            <!-- Modal Header / Image -->
+            <div class="relative h-60 sm:h-72 w-full flex-shrink-0">
+                <img id="modalImg" src="" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                <button id="closeModalBtn" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/80 transition-colors backdrop-blur-md">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+                <div class="absolute bottom-4 left-6 right-6 text-white">
+                    <span id="modalRegion" class="text-xs font-semibold uppercase tracking-widest text-amber-300"></span>
+                    <h3 id="modalTitle" class="font-serif text-2xl sm:text-3xl font-bold"></h3>
+                </div>
+            </div>
+
+            <!-- Modal Content (Scrollable) -->
+            <div class="p-6 sm:p-8 overflow-y-auto space-y-6 text-stone-700 text-sm">
+                <div>
+                    <h4 class="font-serif text-lg font-semibold text-darkRich mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open text-terracotta-500"></i> Sejarah & Asal Usul
+                    </h4>
+                    <p id="modalHistory" class="leading-relaxed text-stone-600"></p>
+                </div>
+
+                <div>
+                    <h4 class="font-serif text-lg font-semibold text-darkRich mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-pepper-hot text-terracotta-500"></i> Bahan Utama
+                    </h4>
+                    <ul id="modalIngredients" class="grid grid-cols-2 gap-2 text-stone-600 list-disc list-inside"></ul>
+                </div>
+
+                <div>
+                    <h4 class="font-serif text-lg font-semibold text-darkRich mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-fire text-terracotta-500"></i> Petunjuk Penyajian
+                    </h4>
+                    <p id="modalServing" class="leading-relaxed text-stone-600"></p>
+                </div>
+
+                <!-- Direct Social Media & Recipe Channel Action Buttons inside Modal -->
+                <div class="pt-4 border-t border-stone-100 space-y-2">
+                    <p class="text-xs font-semibold text-stone-500 uppercase tracking-wider mb-2">Langsung Buka Akun & Kreasi Kuliner Ini:</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <a id="modalIgBtn" href="#" target="_blank" rel="noopener noreferrer" class="py-2.5 px-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white rounded-xl text-xs font-semibold text-center flex items-center justify-center gap-1.5 transition-all shadow-sm">
+                            <i class="fa-brands fa-instagram text-sm"></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a id="modalYtBtn" href="#" target="_blank" rel="noopener noreferrer" class="py-2.5 px-3 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-semibold text-center flex items-center justify-center gap-1.5 transition-all shadow-sm">
+                            <i class="fa-brands fa-youtube text-sm"></i>
+                            <span>YouTube Resep</span>
+                        </a>
+                        <a id="modalTtBtn" href="#" target="_blank" rel="noopener noreferrer" class="py-2.5 px-3 bg-stone-900 hover:bg-black text-white rounded-xl text-xs font-semibold text-center flex items-center justify-center gap-1.5 transition-all shadow-sm">
+                            <i class="fa-brands fa-tiktok text-sm"></i>
+                            <span>TikTok Kuliner</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT DATABASE & LOGIC -->
+    <script>
+        // Database Lengkap Makanan Khas Daerah Nusantara
+        const foodData = [
+            {
+                id: 'rendang',
+                name: 'Rendang',
+                region: 'sumatera',
+                origin: 'Sumatra Barat (Padang)',
+                desc: 'Daging sapi yang dimasak perlahan dengan santan murni dan bumbu rempah-rempah hingga berwarna cokelat gelap mengering sempurna.',
+                badge: 'Terpopuler',
+                spicyLevel: 3,
+                img: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?q=80&w=800&auto=format&fit=crop',
+                history: 'Bermula dari tradisi masyarakat Minangkabau yang sering merantau. Proses masak berjam-jam membuat rendang dapat bertahan lama sebagai bekal perjalanan.',
+                ingredients: ['Daging Sapi Segar', 'Santan Kelapa Kental', 'Serai & Daun Jeruk', 'Cabai Merah Olahan', 'Lengkuas & Kunyit', 'Bawang Merah & Putih'],
+                serving: 'Sangat pas disajikan dengan nasi putih panas, daun singkong rebus, dan sambal ijo khas Minang.',
+                igTag: 'rendangpadang',
+                ttTag: 'rendangpadang'
+            },
+            {
+                id: 'gudeg',
+                name: 'Gudeg',
+                region: 'jawa',
+                origin: 'DI Yogyakarta',
+                desc: 'Sajian manis gurih dari nangka muda (gori) yang direbus berjam-jam bersama gula jawa, santan, dan bumbu pelengkap.',
+                badge: 'Otentik',
+                spicyLevel: 1,
+                img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop',
+                history: 'Gudeg sudah ada sejak masa pembabatan hutan Mataram Islam pada abad ke-16. Nangka muda yang berlimpah dimasak dalam kuali besar oleh para prajurit.',
+                ingredients: ['Nangka Muda (Gori)', 'Gula Aren / Jawa', 'Santan Kental', 'Daun Salam & Lengkuas', 'Telur Bacem', 'Sambal Goreng Krecek'],
+                serving: 'Disajikan dalam piring atau pincuk daun pisang dengan telur bacem, opor ayam, dan krecek pedas.',
+                igTag: 'gudegjogja',
+                ttTag: 'gudegjogja'
+            },
+            {
+                id: 'pempek',
+                name: 'Pempek',
+                region: 'sumatera',
+                origin: 'Sumatra Selatan (Palembang)',
+                desc: 'Olahan daging ikan tenggiri dan tepung sagu bertekstur kenyal, dinikmati bersama kuah cuko asam manis pedas.',
+                badge: 'Khas Palembang',
+                spicyLevel: 2,
+                img: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?q=80&w=800&auto=format&fit=crop',
+                history: 'Dahulu bernama Kelesan. Nama Pempek berasal dari sebutan Apek, sebutan paman bagi pedagang Tionghoa yang mempopulerkannya di awal abad ke-20.',
+                ingredients: ['Daging Ikan Tenggiri', 'Tepung Sagu/Tapioka', 'Gula Aren Hitam', 'Asam Jawa & Cuka', 'Cabai Rawit Halus', 'Bawang Putih'],
+                serving: 'Goreng hingga keemasan, iris kasar, tambahkan mie kuning, mentimun cincang, lalu siram cuko kental.',
+                igTag: 'pempekpalembang',
+                ttTag: 'pempekpalembang'
+            },
+            {
+                id: 'ayam-betutu',
+                name: 'Ayam Betutu',
+                region: 'bali-nusa',
+                origin: 'Bali',
+                desc: 'Ayam utuh yang dibumbui bumbu base genep khas Bali lalu dibungkus daun pisang dan dipanggang atau dikukus lama.',
+                badge: 'Bumbu Kaya',
+                spicyLevel: 3,
+                img: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80&w=800&auto=format&fit=crop',
+                history: 'Betutu merupakan hidangan tradisional Bali yang sering disajikan dalam upacara adat dan keagamaan seperti Odalan.',
+                ingredients: ['Ayam Utuh Kampung', 'Base Genep (Rempah Bali)', 'Kencur, Kunyit, Lengkuas', 'Terasi & Cabai Rawit', 'Daun Pisang Pembungkus', 'Minyak Kelapa murni'],
+                serving: 'Disajikan bersama nasi hangat, sambal matah pedas segar, kacang tanah goreng, dan plecing kangkung.',
+                igTag: 'ayambetutubali',
+                ttTag: 'ayambetutubali'
+            },
+            {
+                id: 'coto-makassar',
+                name: 'Coto Makassar',
+                region: 'sulawesi',
+                origin: 'Sulawesi Selatan (Makassar)',
+                desc: 'Soto kaya rempah berisi potongan daging dan jeroan sapi dengan kuah gurih kental beraroma kacang tanah sangrai.',
+                badge: 'Gurih Mantap',
+                spicyLevel: 2,
+                img: 'https://images.unsplash.com/photo-1572656631137-7935297eff55?q=80&w=800&auto=format&fit=crop',
+                history: 'Coto Makassar diyakini telah ada sejak jaman Kerajaan Gowa pada abad ke-16 dan menjadi santapan istimewa keluarga kerajaan.',
+                ingredients: ['Daging & Jeroan Sapi', 'Kacang Tanah Sangrai Halus', 'Air Cuci Beras (Tajin)', 'Ketumbar, Jinten, Serai', 'Bawang Merah & Putih', 'Daun Jeruk Purut'],
+                serving: 'Sangat pas disantap panas bersama ketupat daun kelapa atau buras dan perasan jeruk nipis.',
+                igTag: 'cotomakassar',
+                ttTag: 'cotomakassar'
+            },
+            {
+                id: 'papeda',
+                name: 'Papeda & Kuah Kuning',
+                region: 'papua-maluku',
+                origin: 'Papua & Maluku',
+                desc: 'Makanan pokok berupa bubur sagu kenyal yang disajikan bersama kuah ikan segar berwarna kuning dengan rasa asam gurih.',
+                badge: 'Eksotis',
+                spicyLevel: 1,
+                img: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=800&auto=format&fit=crop',
+                history: 'Papeda merupakan makanan pokok warisan leluhur masyarakat pesisir Papua dan Maluku sebagai pengganti nasi.',
+                ingredients: ['Tepung Sagu Murni', 'Ikan Tongkol / Kakap', 'Kunyit & Kemiri', 'Daun Kemangi Segar', 'Jeruk Nipis', 'Cabai Rawit Utuh'],
+                serving: 'Papeda digulung menggunakan gata-gata (sumpit kayu) lalu disiram kuah kuning dan potongan ikan segar.',
+                igTag: 'papedapapua',
+                ttTag: 'papedapapua'
+            },
+            {
+                id: 'soto-betawi',
+                name: 'Soto Betawi',
+                region: 'jawa',
+                origin: 'DKI Jakarta',
+                desc: 'Soto kuah gurih bercita rasa tinggi gabungan santan dan susu sapi segar, diisi potongan daging empuk dan emping.',
+                badge: 'Ikonik',
+                spicyLevel: 1,
+                img: 'https://images.unsplash.com/photo-1572656631137-7935297eff55?q=80&w=800&auto=format&fit=crop',
+                history: 'Dipopulerkan oleh penjual soto bernama Lie Boen Po pada dekade 1970-an dan menjadi salah satu kuliner paling dibanggakan warga Jakarta.',
+                ingredients: ['Daging & Jeroan Sapi', 'Santan & Susu Sapi Segar', 'Minyak Samin', 'Bawang Merah & Putih', 'Emping Melinjo', 'Tomat & Jeruk Limo'],
+                serving: 'Nikmati selagi panas dengan emping renyah, perasan jeruk limo, acar mentimun, dan sambal merah.',
+                igTag: 'sotobetawi',
+                ttTag: 'sotobetawi'
+            },
+            {
+                id: 'rawon',
+                name: 'Rawon',
+                region: 'jawa',
+                origin: 'Jawa Timur (Surabaya)',
+                desc: 'Sup daging sapi khas berkuah hitam pekat alami dari kluwek dengan aroma harum rempah yang tajam dan lezat.',
+                badge: 'Legendaris',
+                spicyLevel: 1,
+                img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop',
+                history: 'Rawon merupakan salah satu masakan tertua di Jawa. Catatan sejarah prasasti Taji (901 M) menyebutkan hidangan bernama Rerarawwan.',
+                ingredients: ['Daging Sapi (Sandung Lamur)', 'Kluwek Hitam Matang', 'Serai & Lengkuas', 'Daun Jeruk', 'Tauge Pendek (Kecambah)', 'Telur Asin & Kerupuk Udang'],
+                serving: 'Disajikan bersama nasi putih, tauge pendek mentah, telur asin, sambal terasi, dan kerupuk udang.',
+                igTag: 'rawonsurabaya',
+                ttTag: 'rawonsurabaya'
+            },
+            {
+                id: 'mie-aceh',
+                name: 'Mie Aceh',
+                region: 'sumatera',
+                origin: 'Aceh',
+                desc: 'Mie kuning tebal dengan bumbu rempah kari pedas nan pekat, disajikan dengan irisan daging sapi, kambing, atau kepiting.',
+                badge: 'Kaya Rempah',
+                spicyLevel: 3,
+                img: 'https://images.unsplash.com/photo-1555126634-323283e090fa?q=80&w=800&auto=format&fit=crop',
+                history: 'Perekonomian Aceh di masa lampau sebagai pelabuhan perdagangan dunia melahirkan perpaduan kuliner khas India, Tionghoa, dan Arab.',
+                ingredients: ['Mie Kuning Tebal', 'Daging Sapi / Udang', 'Bumbu Kari Aceh (Kardamon, Jinten)', 'Bawang Merah & Putih', 'Acar Bawang Merah', 'Emping Melinjo'],
+                serving: 'Tersedia varian goreng, tumis, atau kuah. Disajikan dengan acar bawang merah segar dan emping melinjo.',
+                igTag: 'mieaceh',
+                ttTag: 'mieaceh'
+            },
+            {
+                id: 'ayam-taliwang',
+                name: 'Ayam Taliwang',
+                region: 'bali-nusa',
+                origin: 'Nusa Tenggara Barat (Lombok)',
+                desc: 'Ayam kampung muda bakar khas Karang Taliwang dengan baluran sambal pedas menggigit dan aroma bakar khas.',
+                badge: 'Pedas Spesial',
+                spicyLevel: 3,
+                img: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80&w=800&auto=format&fit=crop',
+                history: 'Diciptakan pertama kali oleh juru masak pasukan Kerajaan Taliwang dari Sumbawa saat bertugas di Pulau Lombok.',
+                ingredients: ['Ayam Kampung Muda', 'Cabai Merah & Rawit', 'Terasi Lombok Otentik', 'Kencur Segar', 'Tomat & Gula Merah', 'Minyak Kelapa'],
+                serving: 'Sangat serasi disajikan bersama plecing kangkung segar dengan sambal terasi dan beberuk terong.',
+                igTag: 'ayamtaliwang',
+                ttTag: 'ayamtaliwang'
+            }
+        ];
+
+        // Render Food Cards
+        const foodGrid = document.getElementById('foodGrid');
+        const noResults = document.getElementById('noResults');
+
+        function renderCards(data) {
+            foodGrid.innerHTML = '';
+            if (data.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+            noResults.classList.add('hidden');
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-3xl overflow-hidden hover-lift flex flex-col justify-between shadow-sm border border-stone-200/80';
+                
+                // Spicy Icons
+                let spicyIcons = '';
+                for(let i=0; i<item.spicyLevel; i++) {
+                    spicyIcons += '<i class="fa-solid fa-pepper-hot text-terracotta-500 text-xs"></i> ';
+                }
+
+                // Direct Social Search Target
+                const socialTargetUrl = `https://www.tiktok.com/tag/${item.ttTag}`;
+
+                card.innerHTML = `
+                    <div>
+                        <div class="relative h-52 overflow-hidden">
+                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+                            <span class="absolute top-4 left-4 bg-darkRich/80 backdrop-blur-md text-amber-300 text-[10px] font-semibold tracking-wider uppercase px-3 py-1 rounded-full border border-white/10">
+                                ${item.badge}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-xs font-semibold text-terracotta-500 uppercase tracking-wider">${item.origin}</span>
+                                <div class="flex gap-1" title="Tingkat Pedas">${spicyIcons}</div>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-darkRich mb-2">${item.name}</h3>
+                            <p class="text-stone-600 text-xs leading-relaxed line-clamp-3 mb-4">${item.desc}</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-0 flex flex-col gap-2">
+                        <button onclick="openModal('${item.id}')" class="w-full py-2.5 bg-terracotta-500 hover:bg-terracotta-600 text-white rounded-xl text-xs font-semibold tracking-wider transition-all duration-300 flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>Detail & Resep</span>
+                        </button>
+                        <a href="${socialTargetUrl}" target="_blank" rel="noopener noreferrer" class="w-full py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl text-xs font-semibold tracking-wider transition-all duration-300 flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-tiktok text-black text-sm"></i>
+                            <span>Cek Akun & Video Kuliner</span>
+                        </a>
+                    </div>
+                `;
+                foodGrid.appendChild(card);
+            });
+        }
+
+        // Initial Render
+        renderCards(foodData);
+
+        // Quick Category Filter Logic
+        let currentRegion = 'semua';
+
+        function quickFilter(region) {
+            currentRegion = region;
+            
+            // Update UI Quick Filter Buttons
+            const buttons = document.querySelectorAll('.quick-region-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('ring-2', 'ring-terracotta-500', 'bg-terracotta-50');
+            });
+
+            if(event && event.currentTarget) {
+                event.currentTarget.classList.add('ring-2', 'ring-terracotta-500', 'bg-terracotta-50');
+            }
+
+            filterData();
+        }
+
+        // Search Input Event
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', () => {
+            filterData();
+        });
+
+        function filterData() {
+            const query = searchInput.value.toLowerCase().trim();
+            let filtered = foodData;
+
+            if (currentRegion !== 'semua') {
+                filtered = filtered.filter(item => item.region === currentRegion);
+            }
+
+            if (query !== '') {
+                filtered = filtered.filter(item => 
+                    item.name.toLowerCase().includes(query) || 
+                    item.origin.toLowerCase().includes(query) ||
+                    item.desc.toLowerCase().includes(query)
+                );
+            }
+
+            renderCards(filtered);
+        }
+
+        // Modal Logic
+        const foodModal = document.getElementById('foodModal');
+        const modalContainer = document.getElementById('modalContainer');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        function openModal(foodId) {
+            const food = foodData.find(item => item.id === foodId);
+            if (!food) return;
+
+            document.getElementById('modalImg').src = food.img;
+            document.getElementById('modalTitle').textContent = food.name;
+            document.getElementById('modalRegion').textContent = food.origin;
+            document.getElementById('modalHistory').textContent = food.history;
+            document.getElementById('modalServing').textContent = food.serving;
+
+            // Direct Active Links inside Modal to culinary profiles & video channels
+            document.getElementById('modalIgBtn').href = `https://www.instagram.com/explore/tags/${food.igTag}/`;
+            document.getElementById('modalYtBtn').href = `https://www.youtube.com/results?search_query=resep+${encodeURIComponent(food.name)}+${encodeURIComponent(food.origin)}`;
+            document.getElementById('modalTtBtn').href = `https://www.tiktok.com/tag/${food.ttTag}`;
+
+            const ingredientsList = document.getElementById('modalIngredients');
+            ingredientsList.innerHTML = '';
+            food.ingredients.forEach(ing => {
+                const li = document.createElement('li');
+                li.textContent = ing;
+                ingredientsList.appendChild(li);
+            });
+
+            foodModal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContainer.classList.remove('scale-95', 'opacity-0');
+                modalContainer.classList.add('scale-100', 'opacity-100');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modalContainer.classList.remove('scale-100', 'opacity-100');
+            modalContainer.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                foodModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        foodModal.addEventListener('click', (e) => {
+            if (e.target === foodModal) closeModal();
+        });
+
+        // Sticky Navbar Transition
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-darkRich/90', 'backdrop-blur-md', 'shadow-lg', 'py-3');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.remove('bg-darkRich/90', 'backdrop-blur-md', 'shadow-lg', 'py-3');
+                navbar.classList.add('py-4');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
